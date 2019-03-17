@@ -9,10 +9,13 @@
 import UIKit
 import Speech
 
-class ViewController: UIViewController, SFSpeechRecognizerDelegate {
+class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     @IBOutlet weak var questionAnswerView: UITextView!
+    
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
     
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
     
@@ -24,6 +27,8 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         super.viewDidLoad()
         
         recordButton.isEnabled = false
+        cancelButton.isEnabled = false
+        submitButton.isEnabled = false
         
         speechRecognizer.delegate = self
         
@@ -61,11 +66,30 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
             recordButton.isEnabled = false
             recordButton.setTitle("Start Recording", for: .normal)
             recordButton.setTitleColor(self.view.tintColor, for: .normal)
+            cancelButton.isEnabled = true
+            submitButton.isEnabled = true
+            
         } else {
             startRecording()
             recordButton.setTitle("Stop Recording", for: .normal)
             recordButton.setTitleColor(UIColor.red, for: .normal)
+            submitButton.isEnabled = false
+            cancelButton.isEnabled = true
         }
+    }
+    
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        audioEngine.stop()
+        recognitionRequest?.endAudio()
+        questionAnswerView.text = "Press the button below to start recording. Anything you say will appear here."
+        submitButton.isEnabled = false
+        recordButton.isEnabled = true
+        recordButton.setTitle("Start Recording", for: .normal)
+        recordButton.setTitleColor(self.view.tintColor, for: .normal)
+    }
+    
+    @IBAction func submitButtonTapped(_ sender: Any) {
+
     }
     
     func startRecording() {

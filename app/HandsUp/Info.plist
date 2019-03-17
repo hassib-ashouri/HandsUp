@@ -33,6 +33,8 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>This is only used to convert your questions/answers to text so that we can send you a report at the end of a session.</string>
+	<key>NSMicrophoneUsageDescription</key>
 	<string>This is only used to record your questions/answers so that we can send you a report at the end of a session.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
