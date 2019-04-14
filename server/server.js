@@ -11,14 +11,16 @@ const {
     UNIQUE_CODE,
     TERMINATE_SESSION,
     ANSWER,
-    QUESTION
+    QUESTION,
+    DATABASE_NAME
 } = require('./handsup');
 
 
 const server = require('http').createServer();
 const io = require('socket.io')(server);
 const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient('mongodb://localhost:27071');
+const client = new MongoClient('mongodb://localhost:27017',{useNewUrlParser: true});
+let db;
 
 
 io.on('connection', socket => {
@@ -32,7 +34,14 @@ io.on('connection', socket => {
     socket.on(QUESTION, questionListner);
 });
 
-server.listen(4000, () => console.log(`listening on port ${server.address().port}`));
 
-// export the database client to be used my the classesmangaer.
-export {client};
+// connect to the database then start the server.
+client.connect((err, client) => {
+    if(err) throw err;
+    db = client.db(DATABASE_NAME);
+    if(db) console.log('connected to database');
+    server.listen(4000, () => console.log(`listening on port ${server.address().port}`));
+});
+
+// export the database db connection to be used my the classesmangaer.
+module.exports.db = db;
