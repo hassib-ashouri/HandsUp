@@ -1,5 +1,11 @@
 'use string';
-
+const   JOIN_SESSION = 'join',
+        ANSWER = 'answer',
+        QUESTION = 'question',
+        TERMINATE_SESSION = 'terminate',
+        LEAVE_SESSION = 'leave',
+        UNIQUE_CODE = 'unique',
+        DATABASE_NAME = 'HandsUp';
 
 /**
  * This is the listner to 'getcode' event where the professor 
@@ -70,18 +76,18 @@ function joinListner(data)
 
 }
 
-export {
-    joinListner,
-    leaveSessionListner,
-    questionListner,
-    answerListner,
-    terminateSessionListner,
-    uniqueCodeListner
-}
-export const 
-JOIN_SESSION = 'join',
-ANSWER = 'answer',
-QUESTION = 'question',
-TERMINATE_SESSION = 'terminate',
-LEAVE_SESSION = 'leave',
-UNIQUE_CODE = 'unique';
+module.exports = {
+    joinListner : joinListner,
+    leaveSessionListner : leaveSessionListner,
+    questionListner : questionListner,
+    answerListner : answerListner,
+    terminateSessionListner : terminateSessionListner,
+    uniqueCodeListner : uniqueCodeListner,
+    JOIN_SESSION : JOIN_SESSION,
+    ANSWER : ANSWER,
+    QUESTION : QUESTION,
+    TERMINATE_SESSION : TERMINATE_SESSION,
+    LEAVE_SESSION : LEAVE_SESSION,
+    UNIQUE_CODE : UNIQUE_CODE,
+    DATABASE_NAME : DATABASE_NAME
+};
