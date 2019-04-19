@@ -41,7 +41,6 @@ function makeClass(className, code)
     if(!db) throw "Database is not connected";
     // add the code to the local map
     classesMap.set(code, {className: className, sockets: []});
-    console.log(classesMap);
     //add the class to the database.
     db.createCollection(code);
     console.log(`A new collection has been created for ${className}`);
