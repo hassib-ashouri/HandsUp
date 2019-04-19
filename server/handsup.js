@@ -5,7 +5,13 @@ const   JOIN_SESSION = 'join',
         TERMINATE_SESSION = 'terminate',
         LEAVE_SESSION = 'leave',
         UNIQUE_CODE = 'unique',
-        DATABASE_NAME = 'HandsUp';
+        DATABASE_NAME = 'HandsUp',
+        REPLY = 'reply';
+
+let {
+    getUniqueID,
+    makeClass
+} = require('./classesManager.js');
 
 /**
  * This is the listner to 'getcode' event where the professor 
@@ -16,7 +22,11 @@ const   JOIN_SESSION = 'join',
  */
 function uniqueCodeListner({className})
 {
-
+    // get the unique code
+    let uniqueCode = getUniqueID();
+    console.log(`Got a unique code ${uniqueCode}`);
+    this.emit(REPLY, {message:`Unique code created sucessfully ${uniqueCode}`});
+    makeClass(className, uniqueCode);
 }
 
 /**
