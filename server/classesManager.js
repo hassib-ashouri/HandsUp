@@ -1,6 +1,6 @@
 'use strict';
-
-const {db, DATABASE_NAME} = require('./server');
+// load the function to grab the db instance from the server.
+const getDb = require('./server.js').getDb;
 /**
  * a map of the unique codes of classes to their name.
  * The purpose is for fast lookup of class codes, and to save the 
@@ -21,11 +21,12 @@ const classes = {};
  */
 function getUniqueID()
 {
+    let code;
     do{
-        let code = Math.random().toString(36).substr(2,6);
+        code = Math.random().toString(36).substr(2,6);
     } while(Object.keys(classes).includes(code))
 
-    return code;
+    return code.toString();
 }
 
 /**
@@ -36,10 +37,13 @@ function getUniqueID()
  */
 function makeClass(className, code)
 {
+    let db = getDb();
+    if(!db) throw "Database is not connected";
     // add the code to the local map
     classesMap.set(code, {className: className, sockets: []});
+    console.log(classesMap);
     //add the class to the database.
-    db.createCollection(code).then();
+    db.createCollection(code);
     console.log(`A new collection has been created for ${className}`);
 }
 
@@ -59,4 +63,11 @@ function addDialogItem(code, item)
     // add the item to the database.
     // TODO look into adding a call back to handle any error.
     particularCollection.insertOne({dialog: item});
+    // log the event.
+    console.log(`Dialog is added to ${code}: ${item}`);
+}
+
+module.exports = {
+    getUniqueID : getUniqueID,
+    makeClass : makeClass,
 }
