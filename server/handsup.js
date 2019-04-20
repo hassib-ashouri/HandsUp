@@ -10,7 +10,9 @@ const   JOIN_SESSION = 'join',
 
 let {
     getUniqueID,
-    makeClass
+    makeClass,
+    isActive,
+    addDialogItem
 } = require('./classesManager.js');
 
 /**
@@ -25,7 +27,10 @@ function uniqueCodeListner({className})
     // get the unique code
     let uniqueCode = getUniqueID();
     console.log(`Got a unique code ${uniqueCode}`);
-    this.emit(REPLY, {message:`Unique code created sucessfully ${uniqueCode}`});
+    this.emit(REPLY, {
+        message:`Unique code created sucessfully ${uniqueCode}`,
+        code : uniqueCode
+    });
     makeClass(className, uniqueCode);
 }
 
@@ -50,7 +55,10 @@ function terminateSessionListner({code})
  */
 function answerListner({code, answer})
 {
-
+    if(isActive(code))
+        addDialogItem(code, `Answer: ${answer}`);
+    else 
+        console.log(`class with ${code} does not exist.`);
 }
 
 /**
