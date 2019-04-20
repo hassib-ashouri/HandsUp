@@ -1,6 +1,7 @@
 'use strict';
 // load the function to grab the db instance from the server.
 const getDb = require('./server.js').getDb;
+const assert = require('assert');
 /**
  * a map of the unique codes of classes to their name.
  * The purpose is for fast lookup of class codes, and to save the 
@@ -40,7 +41,8 @@ function makeClass(className, code)
     let db = getDb();
     if(!db) throw "Database is not connected";
     // add the code to the local map
-    classesMap.set(code, {className: className, sockets: []});
+    classes[code] = className;
+    classesMap.set(code, {className: className, listeners: {}});
     //add the class to the database.
     db.createCollection(code);
     console.log(`A new collection has been created for ${className}`);
@@ -53,20 +55,28 @@ function makeClass(className, code)
  */
 function addDialogItem(code, item)
 {
+    let db = getDb();
     if(!db) throw "Database is not connected";
-    // check if a class with specific code exists.
-    if(!Object.keys(classes).includes(code))
-        throw `The code ${code} does not exist in current active classes.`;
     
-    const particularCollection = db.collection(code);
-    // add the item to the database.
     // TODO look into adding a call back to handle any error.
-    particularCollection.insertOne({dialog: item});
+    db.collection(code).insertOne({dialog: item});
     // log the event.
     console.log(`Dialog is added to ${code}: ${item}`);
+}
+
+/**
+ * checks is a class with a specific code is active.
+ * @param {String} code the code associated with a class
+ */
+function isActive(code)
+{
+    assert.ok(code,"Code to look for is unintialized.");
+    return Object.keys(classes).includes(code);
 }
 
 module.exports = {
     getUniqueID : getUniqueID,
     makeClass : makeClass,
+    isActive : isActive,
+    addDialogItem : addDialogItem,
 }
