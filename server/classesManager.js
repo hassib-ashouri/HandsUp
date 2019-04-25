@@ -65,6 +65,29 @@ function addDialogItem(code, item)
 }
 
 /**
+ * Adds a student trying to join to the current class specified by code variable.
+ * The email will be recorded.
+ * @param {String} code the code for the class the student is trying to add to.
+ * @param {String} email the email of the student trying to join.
+ * @param {Socket} socket The socket object of the student joining
+ */
+function addStudent(code, email, socket)
+{
+    // check input
+    assert.ok(code, "Uninitialized code input when adding a student");
+    assert.ok(email, "Uninitialized email input when adding a student");
+    assert.ok(socket, "Uninitialized socket input when adding a student");
+    //check if the class exits
+    assert.ok(classes[code], `Class of code ${code} does not exists`);
+    let classObj = classesMap.get(code);
+    assert.ok(classObj, "Something is wrong, a class is not in the map." );
+    // add a student as a listener to a class.
+    // override old socket if it exists.
+    // it works if the student reconnected later.
+    classObj.listeners[email] = socket;
+}
+
+/**
  * checks is a class with a specific code is active.
  * @param {String} code the code associated with a class
  */
@@ -79,4 +102,5 @@ module.exports = {
     makeClass : makeClass,
     isActive : isActive,
     addDialogItem : addDialogItem,
+    addStudent : addStudent,
 }
