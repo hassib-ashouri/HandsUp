@@ -40,6 +40,7 @@ io.on('connection', socket => {
     socket.on(TERMINATE_SESSION, terminateSessionListner);
     socket.on(ANSWER, answerListner);
     socket.on(QUESTION, questionListner);
+    socket.on('disconnect', () => console.log(`Socket disconnected ${socket.id}`));
 });
 
 
@@ -47,6 +48,6 @@ io.on('connection', socket => {
 client.connect((err, client) => {
     if(err) throw err;
     db = client.db(DATABASE_NAME);
-    if(db) console.log('connected to database');
+    if(db) console.log('connected to database', DATABASE_NAME);
     server.listen(4000, () => console.log(`listening on port ${server.address().port}`));
 });
