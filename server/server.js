@@ -9,8 +9,7 @@ module.exports = {
     getDb : () => db,
 };
 const {
-    answerListner,
-    questionListner,
+    dialogListner,
     uniqueCodeListner,
     joinListner,
     leaveSessionListner,
@@ -19,8 +18,7 @@ const {
     LEAVE_SESSION,
     UNIQUE_CODE,
     TERMINATE_SESSION,
-    ANSWER,
-    QUESTION,
+    DIALOG,
     DATABASE_NAME
 } = require('./handsup');
 
@@ -38,8 +36,7 @@ io.on('connection', socket => {
     socket.on(LEAVE_SESSION, leaveSessionListner);
     socket.on(UNIQUE_CODE, uniqueCodeListner);
     socket.on(TERMINATE_SESSION, terminateSessionListner);
-    socket.on(ANSWER, answerListner);
-    socket.on(QUESTION, questionListner);
+    socket.on(DIALOG, dialogListner);
     socket.on('disconnect', () => console.log(`Socket disconnected ${socket.id}`));
 });
 
