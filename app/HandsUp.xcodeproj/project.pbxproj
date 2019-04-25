@@ -7,16 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC669BA8B9B9D1B4B3EA75B3 /* Pods_HandsUp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6B516A4AE8D86CCA8DBF6B7 /* Pods_HandsUp.framework */; };
+		E02A56E322459AC500851453 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02A56E222459AC500851453 /* SettingsViewController.swift */; };
 		E048EC822232444B00E1C3F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E048EC812232444B00E1C3F0 /* AppDelegate.swift */; };
 		E048EC842232444B00E1C3F0 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E048EC832232444B00E1C3F0 /* RecordingViewController.swift */; };
 		E048EC872232444B00E1C3F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E048EC852232444B00E1C3F0 /* Main.storyboard */; };
 		E048EC892232444C00E1C3F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E048EC882232444C00E1C3F0 /* Assets.xcassets */; };
 		E048EC8C2232444C00E1C3F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E048EC8A2232444C00E1C3F0 /* LaunchScreen.storyboard */; };
+		E057C471226859070096A716 /* EmailSubmissionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E057C470226859070096A716 /* EmailSubmissionViewController.swift */; };
+		E0A2C31E223CC60C00E53002 /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0A2C31D223CC60C00E53002 /* SessionViewController.swift */; };
 		E0B0DAAA223B562F00F83576 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0B0DAA9223B562F00F83576 /* FirstScreenViewController.swift */; };
-		E0E444F22233403700EDC339 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0E444F12233403700EDC339 /* User.swift */; };
+		E0CDCA7F22714C16004DAECB /* Connection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0CDCA7E22714C15004DAECB /* Connection.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9EFA0FEA4B34844BF7CE04BE /* Pods-HandsUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HandsUp.debug.xcconfig"; path = "Target Support Files/Pods-HandsUp/Pods-HandsUp.debug.xcconfig"; sourceTree = "<group>"; };
+		E02A56E222459AC500851453 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		E048EC7E2232444B00E1C3F0 /* HandsUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HandsUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E048EC812232444B00E1C3F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E048EC832232444B00E1C3F0 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
@@ -24,8 +30,12 @@
 		E048EC882232444C00E1C3F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E048EC8B2232444C00E1C3F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E048EC8D2232444C00E1C3F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E057C470226859070096A716 /* EmailSubmissionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSubmissionViewController.swift; sourceTree = "<group>"; };
+		E0A2C31D223CC60C00E53002 /* SessionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
 		E0B0DAA9223B562F00F83576 /* FirstScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstScreenViewController.swift; sourceTree = "<group>"; };
-		E0E444F12233403700EDC339 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E0CDCA7E22714C15004DAECB /* Connection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
+		E6B516A4AE8D86CCA8DBF6B7 /* Pods_HandsUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HandsUp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F437FD2CB579152B827979FB /* Pods-HandsUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HandsUp.release.xcconfig"; path = "Target Support Files/Pods-HandsUp/Pods-HandsUp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +43,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC669BA8B9B9D1B4B3EA75B3 /* Pods_HandsUp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8AB8091A64B0DB1DFA1ECCAC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9EFA0FEA4B34844BF7CE04BE /* Pods-HandsUp.debug.xcconfig */,
+				F437FD2CB579152B827979FB /* Pods-HandsUp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		B8DD46C4C6A16E7B53630CE4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E6B516A4AE8D86CCA8DBF6B7 /* Pods_HandsUp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E048EC752232444B00E1C3F0 = {
 			isa = PBXGroup;
 			children = (
 				E048EC802232444B00E1C3F0 /* HandsUp */,
 				E048EC7F2232444B00E1C3F0 /* Products */,
+				8AB8091A64B0DB1DFA1ECCAC /* Pods */,
+				B8DD46C4C6A16E7B53630CE4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,16 +88,27 @@
 		E048EC802232444B00E1C3F0 /* HandsUp */ = {
 			isa = PBXGroup;
 			children = (
+				E08AD469226860FD00C3FC29 /* ViewControllers */,
 				E048EC812232444B00E1C3F0 /* AppDelegate.swift */,
-				E0E444F12233403700EDC339 /* User.swift */,
-				E048EC832232444B00E1C3F0 /* RecordingViewController.swift */,
-				E0B0DAA9223B562F00F83576 /* FirstScreenViewController.swift */,
+				E0CDCA7E22714C15004DAECB /* Connection.swift */,
 				E048EC852232444B00E1C3F0 /* Main.storyboard */,
 				E048EC882232444C00E1C3F0 /* Assets.xcassets */,
 				E048EC8A2232444C00E1C3F0 /* LaunchScreen.storyboard */,
 				E048EC8D2232444C00E1C3F0 /* Info.plist */,
 			);
 			path = HandsUp;
+			sourceTree = "<group>";
+		};
+		E08AD469226860FD00C3FC29 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E048EC832232444B00E1C3F0 /* RecordingViewController.swift */,
+				E0B0DAA9223B562F00F83576 /* FirstScreenViewController.swift */,
+				E057C470226859070096A716 /* EmailSubmissionViewController.swift */,
+				E02A56E222459AC500851453 /* SettingsViewController.swift */,
+				E0A2C31D223CC60C00E53002 /* SessionViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -77,9 +118,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E048EC902232444C00E1C3F0 /* Build configuration list for PBXNativeTarget "HandsUp" */;
 			buildPhases = (
+				4C12ADDE1128BE2AD8D99B8F /* [CP] Check Pods Manifest.lock */,
 				E048EC7A2232444B00E1C3F0 /* Sources */,
 				E048EC7B2232444B00E1C3F0 /* Frameworks */,
 				E048EC7C2232444B00E1C3F0 /* Resources */,
+				82C10B6D40711D0D637C534A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -102,6 +145,7 @@
 				TargetAttributes = {
 					E048EC7D2232444B00E1C3F0 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -136,6 +180,55 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4C12ADDE1128BE2AD8D99B8F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-HandsUp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82C10B6D40711D0D637C534A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-HandsUp/Pods-HandsUp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HandsUp/Pods-HandsUp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E048EC7A2232444B00E1C3F0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -144,7 +237,10 @@
 				E048EC842232444B00E1C3F0 /* RecordingViewController.swift in Sources */,
 				E0B0DAAA223B562F00F83576 /* FirstScreenViewController.swift in Sources */,
 				E048EC822232444B00E1C3F0 /* AppDelegate.swift in Sources */,
-				E0E444F22233403700EDC339 /* User.swift in Sources */,
+				E0A2C31E223CC60C00E53002 /* SessionViewController.swift in Sources */,
+				E02A56E322459AC500851453 /* SettingsViewController.swift in Sources */,
+				E057C471226859070096A716 /* EmailSubmissionViewController.swift in Sources */,
+				E0CDCA7F22714C16004DAECB /* Connection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +384,7 @@
 		};
 		E048EC912232444C00E1C3F0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9EFA0FEA4B34844BF7CE04BE /* Pods-HandsUp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -301,13 +398,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Team07.HandsUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		E048EC922232444C00E1C3F0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F437FD2CB579152B827979FB /* Pods-HandsUp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -321,7 +419,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Team07.HandsUp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

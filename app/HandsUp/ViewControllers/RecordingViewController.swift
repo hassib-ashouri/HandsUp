@@ -11,6 +11,7 @@ import Speech
 
 class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     
+    // MARK: Properties
     @IBOutlet weak var questionAnswerView: UITextView!
     
     @IBOutlet weak var recordButton: UIButton!
@@ -25,6 +26,12 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Round button and text field
+        cancelButton.layer.cornerRadius = 4
+        submitButton.layer.cornerRadius = 4
+        recordButton.layer.cornerRadius = 4
+        questionAnswerView.layer.cornerRadius = 4
         
         recordButton.isEnabled = false
         cancelButton.isEnabled = false
@@ -51,6 +58,8 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
             case .notDetermined:
                 isButtonEnabled = false
                 print("Speech recognition not yet authorized")
+            @unknown default:
+                print("Speech recognition unavailable")
             }
             
             OperationQueue.main.addOperation() {
@@ -59,37 +68,44 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        self.hidesBottomBarWhenPushed = true
+    }
+    
     @IBAction func recordButtonTapped(_ sender: AnyObject) {
-        if audioEngine.isRunning {
+        if audioEngine.isRunning {  // When recording is active
             audioEngine.stop()
             recognitionRequest?.endAudio()
             recordButton.isEnabled = false
             recordButton.setTitle("Start Recording", for: .normal)
-            recordButton.setTitleColor(self.view.tintColor, for: .normal)
+            recordButton.backgroundColor = self.view.tintColor
             cancelButton.isEnabled = true
             submitButton.isEnabled = true
             
-        } else {
+        } else {    // When recording is not active
             startRecording()
             recordButton.setTitle("Stop Recording", for: .normal)
-            recordButton.setTitleColor(UIColor.red, for: .normal)
+            recordButton.backgroundColor = UIColor(red: 255/255, green: 59/255, blue: 48/255, alpha: 1)
             submitButton.isEnabled = false
             cancelButton.isEnabled = true
         }
     }
     
     @IBAction func cancelButtonTapped(_ sender: Any) {
+        // Stop recording audio
         audioEngine.stop()
         recognitionRequest?.endAudio()
+        
+        // Reset question answer text field
         questionAnswerView.text = "Press the button below to start recording. Anything you say will appear here."
         submitButton.isEnabled = false
         recordButton.isEnabled = true
         recordButton.setTitle("Start Recording", for: .normal)
-        recordButton.setTitleColor(self.view.tintColor, for: .normal)
+        recordButton.backgroundColor = self.view.tintColor
     }
     
     @IBAction func submitButtonTapped(_ sender: Any) {
-
+        
     }
     
     func startRecording() {
