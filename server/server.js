@@ -37,6 +37,7 @@ io.on('connection', socket => {
     socket.on(UNIQUE_CODE, uniqueCodeListner);
     socket.on(TERMINATE_SESSION, terminateSessionListner);
     socket.on(DIALOG, dialogListner);
+    socket.on('test', () => console.log("Test event triggered."));
     socket.on('disconnect', () => console.log(`Socket disconnected ${socket.id}`));
 });
 
