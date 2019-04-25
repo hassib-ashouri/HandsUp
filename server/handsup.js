@@ -1,7 +1,6 @@
 'use string';
 const   JOIN_SESSION = 'join',
-        ANSWER = 'answer',
-        QUESTION = 'question',
+        DIALOG = 'dialog'
         TERMINATE_SESSION = 'terminate',
         LEAVE_SESSION = 'leave',
         UNIQUE_CODE = 'unique',
@@ -12,7 +11,8 @@ let {
     getUniqueID,
     makeClass,
     isActive,
-    addDialogItem
+    addDialogItem,
+    addStudent,
 } = require('./classesManager.js');
 
 /**
@@ -51,26 +51,14 @@ function terminateSessionListner({code})
  * in the data base.
  * @param {Object} data 
  * @param {String} data.code the code of the class to add the answer to.String
- * @param {String} data.answer the answer to be added to the class
+ * @param {String} data.dialog the answer or question to be added to the class
  */
-function answerListner({code, answer})
+function dialogListner({code, dialog})
 {
     if(isActive(code))
-        addDialogItem(code, `Answer: ${answer}`);
+        addDialogItem(code, `Dialog: ${answer}`);
     else 
         console.log(`class with ${code} does not exist.`);
-}
-
-/**
- * This is the handler for any question events. adds the question to the databse
- * to the class specified by the code.
- * @param {Object} data
- * @param {String} data.code
- * @param {String} data.question
- */
-function questionListner({code, question})
-{
-
 }
 
 /**
@@ -88,22 +76,25 @@ function leaveSessionListner({code})
  * Handles the event of a new student joining the class session.
  * It addes the new student to the current list of students.
  * @param {Object} data 
+ * @param {String} data.code the code of the class to join.
+ * @param {String} data.email the email of the student joining the class.Object
  */
 function joinListner(data)
 {
-
+    // TODO consider handeling undefined input at this level vs lower level.
+    addStudent(data.code, data.email, this);
+    console.log("added to class", data.code, data.email);
+    this.emit(REPLY, {message: `Student ${data.email} was added to class ${data.code}`});
 }
 
 module.exports = {
     joinListner : joinListner,
     leaveSessionListner : leaveSessionListner,
-    questionListner : questionListner,
-    answerListner : answerListner,
+    dialogListner : dialogListner,
     terminateSessionListner : terminateSessionListner,
     uniqueCodeListner : uniqueCodeListner,
     JOIN_SESSION : JOIN_SESSION,
-    ANSWER : ANSWER,
-    QUESTION : QUESTION,
+    DIALOG: DIALOG,
     TERMINATE_SESSION : TERMINATE_SESSION,
     LEAVE_SESSION : LEAVE_SESSION,
     UNIQUE_CODE : UNIQUE_CODE,
