@@ -10,27 +10,21 @@ import Foundation
 import SocketIO
 
 class Connection: NSObject {
-    let manager:SocketManager
-    let socket:SocketIOClient
+    static let manager = SocketManager(socketURL: URL(string:"http://handsup.blocklegion.tech:4000")!)
+    static let socket = manager.defaultSocket
     
     override init(){
-        self.manager = SocketManager(socketURL: URL(string:"http://handsup.blocklegion.tech:4000")!)
-        self.socket = self.manager.defaultSocket
-        socket.on("reply"){data, ack in
-            let mess = data[0]
-            print(mess)
+        super.init()
+        Connection.socket.on(clientEvent: .connect) {data, ack in
+            print("socket connected")
         }
-        self.socket.connect()
+        Connection.socket.on("reply") {data, ack in
+            print(data)
+        }
+        Connection.socket.connect(timeoutAfter: 1.0) {print("did not connect")}
     }
     
-    func isActive() -> Bool {
-        if socket == nil{
-            return false
-        }
-        return true
-    }
-    
-    func getSocket() -> SocketIOClient{
-        return socket
+    static func getSocket() -> SocketIOClient{
+        return Connection.socket
     }
 }
