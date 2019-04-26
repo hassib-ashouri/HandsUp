@@ -5,7 +5,8 @@ const   JOIN_SESSION = 'join',
         LEAVE_SESSION = 'leave',
         UNIQUE_CODE = 'unique',
         DATABASE_NAME = 'HandsUp',
-        REPLY = 'reply';
+        REPLY = 'reply',
+        CODE = 'code';
 
 let {
     getUniqueID,
@@ -31,6 +32,7 @@ function uniqueCodeListner({className})
         message:`Unique code created sucessfully ${uniqueCode}`,
         code : uniqueCode
     });
+    this.emit(CODE, {code: uniqueCode});
     makeClass(className, uniqueCode);
 }
 
@@ -56,7 +58,7 @@ function terminateSessionListner({code})
 function dialogListner({code, dialog})
 {
     if(isActive(code))
-        addDialogItem(code, `Dialog: ${answer}`);
+        addDialogItem(code, `Dialog: ${dialog}`);
     else 
         console.log(`class with ${code} does not exist.`);
 }
