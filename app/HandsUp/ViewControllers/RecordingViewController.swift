@@ -104,8 +104,10 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         recordButton.backgroundColor = self.view.tintColor
     }
     
-    @IBAction func submitButtonTapped(_ sender: Any) {
-        
+    @IBAction func submitButtonTapped(_ sender: Any)
+    {
+        let data: [String: Any] = ["code": Connection.classCode, "dialog": questionAnswerView.text]
+        Connection.socket.emit("dialog",data)
     }
     
     func startRecording() {
