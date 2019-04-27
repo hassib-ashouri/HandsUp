@@ -1,2 +1,8 @@
 server/node_modules/
 server/test/
+server/.DS_Store
+app/Podfile.lock
+app/Pods
+app/HandsUp.xcworkspace/
+app/HandsUp.xcodeproj/project.xcworkspace/xcuserdata/soulstaker.xcuserdatad/
+.DS_Store
