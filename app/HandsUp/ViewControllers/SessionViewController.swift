@@ -14,6 +14,8 @@ class SessionViewController: UIViewController {
     @IBOutlet weak var sessionCodeTextField: UITextField!
     @IBOutlet weak var sessionButton: UIButton!
     @IBOutlet weak var sessionCodeLabel: UILabel!
+    // if a student joined a session sucessfully
+    static var joined:JoinState = .noanswer
     let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
@@ -39,7 +41,7 @@ class SessionViewController: UIViewController {
     @IBAction func sessionButtonTapped(_ sender: Any) {
         if defaults.bool(forKey: "isStudent"){  // Student
             // TODO: Add code for joining session
-            let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": UserDefaults.standard.string(forKey: "email")]
+            let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": defaults.string(forKey: "email")]
             Connection.socket.emit("join",jsonLoad)
         }
         else{                                   // Professor
@@ -51,8 +53,11 @@ class SessionViewController: UIViewController {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "recordSegue"{
             if defaults.bool(forKey: "isStudent"){      // Student requesting to joining session
-                if sessionCodeTextField.text?.count == 6{
+                // waite untile we get a response
+                while(SessionViewController.joined == .noanswer){}
+                if SessionViewController.joined == .joined{
                     // TODO: Add code to check if session code is valid in server
+                    
                     return true
                 }
                 else{           // not 6 numbers
@@ -84,4 +89,11 @@ class SessionViewController: UIViewController {
     }
     */
 
+}
+
+enum JoinState
+{
+    case joined
+    case problem
+    case noanswer
 }

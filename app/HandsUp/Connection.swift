@@ -27,6 +27,18 @@ class Connection: NSObject {
                 Connection.classCode = obj["code"] as! String
             }
         }
+        Connection.socket.on("join confirmed") {data, ack in
+            if let obj = data[0] as? NSDictionary {
+                if(obj["didJoin"] as! Bool == true)
+                {
+                    SessionViewController.joined = .joined
+                }
+                else
+                {
+                    SessionViewController.joined = .problem
+                }
+            }
+        }
         Connection.socket.connect(timeoutAfter: 1.0) {print("did not connect")}
     }
     
