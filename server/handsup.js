@@ -6,7 +6,8 @@ const   JOIN_SESSION = 'join',
         UNIQUE_CODE = 'unique',
         DATABASE_NAME = 'HandsUp',
         REPLY = 'reply',
-        CODE = 'code';
+        CODE = 'code',
+        JOIN_CONFIRMATION = 'join confirmed';
 
 let {
     getUniqueID,
@@ -87,6 +88,7 @@ function joinListner(data)
     addStudent(data.code, data.email, this);
     console.log("added to class", data.code, data.email);
     this.emit(REPLY, {message: `Student ${data.email} was added to class ${data.code}`});
+    this.emit(JOIN_CONFIRMATION, {didJoin: true})
 }
 
 module.exports = {
@@ -100,5 +102,6 @@ module.exports = {
     TERMINATE_SESSION : TERMINATE_SESSION,
     LEAVE_SESSION : LEAVE_SESSION,
     UNIQUE_CODE : UNIQUE_CODE,
-    DATABASE_NAME : DATABASE_NAME
+    DATABASE_NAME : DATABASE_NAME,
+    JOIN_CONFIRMATION: JOIN_CONFIRMATION,
 };
