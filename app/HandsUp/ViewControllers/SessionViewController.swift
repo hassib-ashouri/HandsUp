@@ -18,6 +18,7 @@ class SessionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Connection()
         
         // Check if user is a student or professor
         if !defaults.bool(forKey: "isStudent"){ // Professor
@@ -38,13 +39,12 @@ class SessionViewController: UIViewController {
     @IBAction func sessionButtonTapped(_ sender: Any) {
         if defaults.bool(forKey: "isStudent"){  // Student
             // TODO: Add code for joining session
-
+            let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": UserDefaults.standard.string(forKey: "email")]
+            Connection.socket.emit("join",jsonLoad)
         }
         else{                                   // Professor
             // TODO: Add code for starting session
-            let con = Connection()
-            let socket = con.getSocket()
-            socket.emit("unique", ["className": "CS 146"]);
+            Connection.getSocket().emit("unique", ["className": "CS 146"])
         }
     }
     
