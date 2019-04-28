@@ -17,6 +17,9 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var leaveButton: UIButton!
+    
+    let defaults = UserDefaults.standard
     
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
     
@@ -32,6 +35,8 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         submitButton.layer.cornerRadius = 4
         recordButton.layer.cornerRadius = 4
         questionAnswerView.layer.cornerRadius = 4
+        leaveButton.layer.cornerRadius = 4
+        leaveButton.sizeToFit()
         
         recordButton.isEnabled = false
         cancelButton.isEnabled = false
@@ -108,6 +113,49 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     {
         let data: [String: Any] = ["code": Connection.classCode, "dialog": questionAnswerView.text]
         Connection.socket.emit("dialog",data)
+    }
+    
+    @IBAction func leaveButtonTapped(_ sender: Any) {
+        // Student alert strings
+        let studentLeaveTitle = "Are you sure you want to leave?"
+        let studentLeaveMessage = "Anything that has not been submitted will be deleted."
+        
+        // Professor alert strings
+        let professorEndTitle = "Are you sure you want to end the session?"
+        let professorEndMessage = "Anything that has not been submitted by you or the students will be deleted."
+        
+        // Create alert and buttons
+        var alertController = UIAlertController.init()
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        var leaveAction = UIAlertAction.init()
+        
+        if (defaults.bool(forKey: "isStudent")) {       // If user is a student, change alert message and button title
+            alertController = UIAlertController(title: studentLeaveTitle, message: studentLeaveMessage, preferredStyle: .alert)
+            leaveAction = UIAlertAction(title: "Leave", style: .destructive, handler: {(action) in self.leaveAlertActionTapped()})
+        }
+        else {                                          // If user is professor, change alert message and button title
+            alertController = UIAlertController(title: professorEndTitle, message: professorEndMessage, preferredStyle: .alert)
+            leaveAction = UIAlertAction(title: "End Session", style: .destructive, handler: {(action) in self.leaveAlertActionTapped()})
+        }
+        
+        // Add buttons to alert
+        alertController.addAction(cancelAction)
+        alertController.addAction(leaveAction)
+        
+        // Present alert to user
+        present(alertController, animated: true)
+    }
+    
+    func leaveAlertActionTapped() {
+        
+        if (defaults.bool(forKey: "isStudent")) {
+            // TODO: Add code for student leaving session
+        }
+        else {
+            // TODO: Add code for professor ending session
+        }
+        questionAnswerView.text = "Press the button below to start recording. Anything you say will appear here."
+        self.dismiss(animated: true, completion: nil)
     }
     
     func startRecording() {

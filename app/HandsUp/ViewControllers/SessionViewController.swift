@@ -10,13 +10,14 @@ import UIKit
 import SocketIO
 
 class SessionViewController: UIViewController {
-
+    
     @IBOutlet weak var sessionCodeTextField: UITextField!
     @IBOutlet weak var sessionButton: UIButton!
     @IBOutlet weak var sessionCodeLabel: UILabel!
     // if a student joined a session sucessfully
     static var joined:JoinState = .noanswer
     let defaults = UserDefaults.standard
+    static var goingForward = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +27,7 @@ class SessionViewController: UIViewController {
         if !defaults.bool(forKey: "isStudent"){ // Professor
             sessionButton.setTitle("Start New Session", for: .normal)
             sessionCodeTextField.isHidden = true
-            sessionCodeLabel.text = "Click the button below to start a new class session. You will be given a unique code which you must share to your students so they can join your class session."
+            sessionCodeLabel.text = "Click the button below to start a new class session. You will be given a unique code which you must share with your students so they can join your class session."
         }
         sessionButton.layer.cornerRadius = 4
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
@@ -43,17 +44,19 @@ class SessionViewController: UIViewController {
             // TODO: Add code for joining session
             let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": defaults.string(forKey: "email")]
             Connection.socket.emit("join",jsonLoad)
+            SessionViewController.goingForward = false
         }
         else{                                   // Professor
             // TODO: Add code for starting session
             Connection.getSocket().emit("unique", ["className": "CS 146"])
+            SessionViewController.goingForward = false
         }
     }
     
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "recordSegue"{
             if defaults.bool(forKey: "isStudent"){      // Student requesting to joining session
-                // waite untile we get a response
+                // wait until we get a response
                 while(SessionViewController.joined == .noanswer){}
                 if SessionViewController.joined == .joined{
                     // TODO: Add code to check if session code is valid in server
@@ -73,22 +76,30 @@ class SessionViewController: UIViewController {
             }
             else{       // Professor requesting unique session code
                 // TODO: Add code to wait for unique session code from server
+                let alertController = UIAlertController(
+                    title: "Invalid Session Code",
+                    message: "Code should be 6 numbers",
+                    preferredStyle: .alert
+                )
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                present(alertController, animated: true, completion: nil)
+                return false
             }
         }
         return true
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 enum JoinState
