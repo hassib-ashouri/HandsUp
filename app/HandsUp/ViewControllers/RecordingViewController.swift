@@ -73,10 +73,6 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        self.hidesBottomBarWhenPushed = true
-    }
-    
     @IBAction func recordButtonTapped(_ sender: AnyObject) {
         if audioEngine.isRunning {  // When recording is active
             audioEngine.stop()
