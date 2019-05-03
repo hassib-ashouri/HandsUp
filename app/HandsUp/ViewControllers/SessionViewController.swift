@@ -78,14 +78,11 @@ class SessionViewController: UIViewController {
             }
             else{       // Professor requesting unique session code
                 // TODO: Add code to wait for unique session code from server
-//                let alertController = UIAlertController(
-//                    title: "Invalid Session Code",
-//                    message: "Code should be 6 numbers",
-//                    preferredStyle: .alert
-//                )
-//                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-//                present(alertController, animated: true, completion: nil)
-                return true
+                // waite untile we get a response
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
+                {
+                    while(SessionViewController.joined == .noanswer){}
+                }
             }
         }
         return true

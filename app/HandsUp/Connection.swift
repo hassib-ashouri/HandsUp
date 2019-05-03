@@ -25,6 +25,7 @@ class Connection: NSObject {
         Connection.socket.on("code") {data, ack in
             if let obj = data[0] as? NSDictionary {
                 Connection.classCode = obj["code"] as! String
+                SessionViewController.joined = .joined
             }
         }
         Connection.socket.on("join confirmed") {data, ack in
