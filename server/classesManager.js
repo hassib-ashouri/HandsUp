@@ -73,6 +73,7 @@ function addDialogItem(code, item)
  */
 function addStudent(code, email, socket)
 {
+    // TODO make thow exception to be handled on top level instead of asserting.
     // check input
     assert.ok(code, "Uninitialized code input when adding a student");
     assert.ok(email, "Uninitialized email input when adding a student");
