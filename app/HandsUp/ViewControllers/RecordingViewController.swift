@@ -18,6 +18,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var leaveButton: UIButton!
+    @IBOutlet weak var sessionCodeLabel: UILabel!
     
     let defaults = UserDefaults.standard
     
@@ -36,7 +37,12 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         recordButton.layer.cornerRadius = 4
         questionAnswerView.layer.cornerRadius = 4
         leaveButton.layer.cornerRadius = 4
+        if (!defaults.bool(forKey: "isStudent")){
+            leaveButton.setTitle("End Session", for: .normal)
+        }
         leaveButton.sizeToFit()
+        
+        sessionCodeLabel.text = "Session Code: " + Connection.classCode
         
         recordButton.isEnabled = false
         cancelButton.isEnabled = false

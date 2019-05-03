@@ -17,7 +17,6 @@ class SessionViewController: UIViewController {
     // if a student joined a session sucessfully
     static var joined:JoinState = .noanswer
     let defaults = UserDefaults.standard
-    static var goingForward = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +43,10 @@ class SessionViewController: UIViewController {
             // TODO: Add code for joining session
             let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": defaults.string(forKey: "email")]
             Connection.socket.emit("join",jsonLoad)
-            SessionViewController.goingForward = false
         }
         else{                                   // Professor
             // TODO: Add code for starting session
             Connection.getSocket().emit("unique", ["className": "CS 146"])
-            SessionViewController.goingForward = false
         }
     }
     
@@ -76,14 +73,14 @@ class SessionViewController: UIViewController {
             }
             else{       // Professor requesting unique session code
                 // TODO: Add code to wait for unique session code from server
-                let alertController = UIAlertController(
-                    title: "Invalid Session Code",
-                    message: "Code should be 6 numbers",
-                    preferredStyle: .alert
-                )
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                present(alertController, animated: true, completion: nil)
-                return false
+//                let alertController = UIAlertController(
+//                    title: "Invalid Session Code",
+//                    message: "Code should be 6 numbers",
+//                    preferredStyle: .alert
+//                )
+//                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                present(alertController, animated: true, completion: nil)
+                return true
             }
         }
         return true

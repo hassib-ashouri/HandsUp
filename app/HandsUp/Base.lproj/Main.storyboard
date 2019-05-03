@@ -263,14 +263,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Press the button below to start recording. Anything you say will appear here." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="zyZ-PZ-P6d">
-                                <rect key="frame" x="68" y="202" width="279" height="366"/>
+                                <rect key="frame" x="68" y="254" width="279" height="366"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="57" translatesAutoresizingMaskIntoConstraints="NO" id="WAW-er-eYi">
-                                <rect key="frame" x="103" y="576" width="209" height="123"/>
+                                <rect key="frame" x="102" y="628" width="209" height="123"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="FhY-Ge-z4W">
                                         <rect key="frame" x="19.5" y="0.0" width="170" height="32"/>
@@ -327,19 +327,27 @@
                                     <action selector="leaveButtonTapped:" destination="ETB-3G-TTN" eventType="touchUpInside" id="4Nl-80-xwv"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Session Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujY-aB-Tk6">
+                                <rect key="frame" x="154.5" y="189.5" width="105" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="zyZ-PZ-P6d" firstAttribute="top" secondItem="KQe-Dp-1ng" secondAttribute="bottom" constant="59" id="GyI-PF-cx5"/>
+                            <constraint firstItem="zyZ-PZ-P6d" firstAttribute="top" secondItem="KQe-Dp-1ng" secondAttribute="bottom" constant="111" id="GyI-PF-cx5"/>
                             <constraint firstItem="9JT-bb-pXV" firstAttribute="trailing" secondItem="KQe-Dp-1ng" secondAttribute="trailing" constant="282" id="J9x-dk-wMX"/>
                             <constraint firstItem="zyZ-PZ-P6d" firstAttribute="leading" secondItem="9JT-bb-pXV" secondAttribute="leading" constant="68" id="JA8-rQ-lxY"/>
-                            <constraint firstItem="9JT-bb-pXV" firstAttribute="bottom" secondItem="WAW-er-eYi" secondAttribute="bottom" constant="163" id="K7o-8m-Lke"/>
+                            <constraint firstItem="9JT-bb-pXV" firstAttribute="bottom" secondItem="WAW-er-eYi" secondAttribute="bottom" constant="111" id="K7o-8m-Lke"/>
                             <constraint firstItem="KQe-Dp-1ng" firstAttribute="leading" secondItem="9JT-bb-pXV" secondAttribute="leading" constant="20" id="Ms2-fL-w2T"/>
+                            <constraint firstItem="ujY-aB-Tk6" firstAttribute="centerX" secondItem="7TZ-XQ-9Qx" secondAttribute="centerX" id="U7T-XQ-1ik"/>
                             <constraint firstItem="WAW-er-eYi" firstAttribute="top" secondItem="zyZ-PZ-P6d" secondAttribute="bottom" constant="8" id="nST-87-GIn"/>
-                            <constraint firstItem="zyZ-PZ-P6d" firstAttribute="top" secondItem="9JT-bb-pXV" secondAttribute="top" constant="158" id="p4L-9B-XOR"/>
+                            <constraint firstItem="zyZ-PZ-P6d" firstAttribute="top" secondItem="9JT-bb-pXV" secondAttribute="top" constant="210" id="p4L-9B-XOR"/>
                             <constraint firstItem="9JT-bb-pXV" firstAttribute="trailing" secondItem="zyZ-PZ-P6d" secondAttribute="trailing" constant="67" id="r88-yV-cPf"/>
-                            <constraint firstItem="9JT-bb-pXV" firstAttribute="trailing" secondItem="WAW-er-eYi" secondAttribute="trailing" constant="102" id="t4N-dS-ADd"/>
-                            <constraint firstItem="WAW-er-eYi" firstAttribute="leading" secondItem="9JT-bb-pXV" secondAttribute="leading" constant="103" id="yFQ-O5-J9S"/>
+                            <constraint firstItem="9JT-bb-pXV" firstAttribute="trailing" secondItem="WAW-er-eYi" secondAttribute="trailing" constant="103" id="t4N-dS-ADd"/>
+                            <constraint firstItem="zyZ-PZ-P6d" firstAttribute="top" secondItem="ujY-aB-Tk6" secondAttribute="bottom" constant="44" id="u2Y-aA-z34"/>
+                            <constraint firstItem="WAW-er-eYi" firstAttribute="leading" secondItem="9JT-bb-pXV" secondAttribute="leading" constant="102" id="yFQ-O5-J9S"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9JT-bb-pXV"/>
                     </view>
@@ -349,6 +357,7 @@
                         <outlet property="leaveButton" destination="KQe-Dp-1ng" id="2KZ-o4-A6g"/>
                         <outlet property="questionAnswerView" destination="zyZ-PZ-P6d" id="cC3-nZ-F5h"/>
                         <outlet property="recordButton" destination="C78-NU-56z" id="frR-Gd-N4m"/>
+                        <outlet property="sessionCodeLabel" destination="ujY-aB-Tk6" id="hQB-Wr-POA"/>
                         <outlet property="submitButton" destination="akh-dZ-zrg" id="xfk-y7-oGh"/>
                     </connections>
                 </viewController>
