@@ -46,7 +46,7 @@ function uniqueCodeListner({className})
  */
 function terminateSessionListner({code})
 {
-
+    console.log(`Professor terminated session with code ${code}`);
 }
 
 /**
@@ -72,7 +72,7 @@ function dialogListner({code, dialog})
  */
 function leaveSessionListner({code})
 {
-
+    console.log(`Student left class with code ${code}`);
 }
 
 /**

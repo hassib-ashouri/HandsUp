@@ -149,12 +149,14 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     }
     
     func leaveAlertActionTapped() {
-        
+        let jsonLoad: [String:Any] = ["code": Connection.classCode]
         if (defaults.bool(forKey: "isStudent")) {
             // TODO: Add code for student leaving session
+            Connection.socket.emit("leave", jsonLoad)
         }
         else {
             // TODO: Add code for professor ending session
+            Connection.socket.emit("terminate", jsonLoad)
         }
         questionAnswerView.text = "Press the button below to start recording. Anything you say will appear here."
         self.dismiss(animated: true, completion: nil)
