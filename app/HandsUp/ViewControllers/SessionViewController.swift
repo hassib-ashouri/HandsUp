@@ -53,11 +53,16 @@ class SessionViewController: UIViewController {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "recordSegue"{
             if defaults.bool(forKey: "isStudent"){      // Student requesting to joining session
-                // wait until we get a response
-                while(SessionViewController.joined == .noanswer){}
+
+                // waite untile we get a response
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
+                {
+                    while(SessionViewController.joined == .noanswer){}
+                }
                 if SessionViewController.joined == .joined{
                     // TODO: Add code to check if session code is valid in server
-                    
+                    Connection.classCode = sessionCodeTextField.text ?? "1234"
+                    print("joined to class")
                     return true
                 }
                 else{           // not 6 numbers
