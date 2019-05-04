@@ -98,10 +98,19 @@ function isActive(code)
     return Object.keys(classes).includes(code);
 }
 
+/**
+ * gets the emails of students in a specific class.
+ */
+function getEmails(code)
+{
+    return Object.keys(classesMap.get(code).listeners);
+}
+
 module.exports = {
     getUniqueID : getUniqueID,
     makeClass : makeClass,
     isActive : isActive,
     addDialogItem : addDialogItem,
     addStudent : addStudent,
+    getEmails: getEmails
 }

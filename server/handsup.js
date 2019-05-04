@@ -15,7 +15,16 @@ let {
     isActive,
     addDialogItem,
     addStudent,
+    getEmails
 } = require('./classesManager.js');
+const nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'hassib291@gmail.com',
+      pass: '159357258'
+    }
+  });
 
 /**
  * This is the listner to 'getcode' event where the professor 
@@ -47,6 +56,22 @@ function uniqueCodeListner({className})
 function terminateSessionListner({code})
 {
     console.log(`Professor terminated session with code ${code}`);
+    let emails = getEmails(code);
+    var mailOptions = {
+        from: 'hassib291@gmail.com',
+        to: emails.toString(),
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+
 }
 
 /**
