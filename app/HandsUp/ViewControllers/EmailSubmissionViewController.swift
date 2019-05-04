@@ -13,9 +13,12 @@ class EmailSubmissionViewController: UIViewController {
     // MARK: Properties
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var submitEmailButton: UIButton!
+    @IBOutlet weak var notAStudentButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         submitEmailButton.layer.cornerRadius = 4
+        notAStudentButton.layer.cornerRadius = 4
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
         // Do any additional setup after loading the view.
@@ -35,7 +38,10 @@ class EmailSubmissionViewController: UIViewController {
         defaults.set(true, forKey: "isFirstLaunch")
     }
     
-
+    @IBAction func notAStudentButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

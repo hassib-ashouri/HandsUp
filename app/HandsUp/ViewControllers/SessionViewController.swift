@@ -14,6 +14,7 @@ class SessionViewController: UIViewController {
     @IBOutlet weak var sessionCodeTextField: UITextField!
     @IBOutlet weak var sessionButton: UIButton!
     @IBOutlet weak var sessionCodeLabel: UILabel!
+    @IBOutlet weak var notAUserTypeButton: UIButton!
     // if a student joined a session sucessfully
     static var joined:JoinState = .noanswer
     let defaults = UserDefaults.standard
@@ -27,8 +28,13 @@ class SessionViewController: UIViewController {
             sessionButton.setTitle("Start New Session", for: .normal)
             sessionCodeTextField.isHidden = true
             sessionCodeLabel.text = "Click the button below to start a new class session. You will be given a unique code which you must share with your students so they can join your class session."
+            self.tabBarController?.tabBar.isHidden = true
+        }
+        else {
+            notAUserTypeButton.isHidden = true
         }
         sessionButton.layer.cornerRadius = 4
+        notAUserTypeButton.layer.cornerRadius = 4
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         // Do any additional setup after loading the view.
     }
@@ -36,6 +42,10 @@ class SessionViewController: UIViewController {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return true
+    }
+    
+    @IBAction func notAUserTypeButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func sessionButtonTapped(_ sender: Any) {
@@ -68,7 +78,7 @@ class SessionViewController: UIViewController {
                 else{           // not 6 numbers
                     let alertController = UIAlertController(
                         title: "Invalid Session Code",
-                        message: "Code should be 6 numbers",
+                        message: "Code should be 6 characters",
                         preferredStyle: .alert
                     )
                     alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
