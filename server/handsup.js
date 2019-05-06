@@ -15,7 +15,8 @@ let {
     isActive,
     addDialogItem,
     addStudent,
-    getEmails
+    getEmails,
+    ERR_CLASS_DOES_NOT_EXIST,
 } = require('./classesManager.js');
 const nodemailer = require('nodemailer');
 var transporter = nodemailer.createTransport({
@@ -110,7 +111,22 @@ function leaveSessionListner({code})
 function joinListner(data)
 {
     // TODO consider handeling undefined input at this level vs lower level.
-    addStudent(data.code, data.email, this);
+    try
+    {
+        addStudent(data.code, data.email, this);
+    }
+    catch(e)
+    {
+        if(e === ERR_CLASS_DOES_NOT_EXIST)
+        {
+            console.error(`Class with code ${data.code} does not exist.`);
+            this.emit(JOIN_CONFIRMATION, {didJoin: false})
+        }
+        else
+        {
+            console.error(`there is a problem with adding student ${data.email} to class with code ${data.code}`)
+        }
+    }
     console.log("added to class", data.code, data.email);
     this.emit(REPLY, {message: `Student ${data.email} was added to class ${data.code}`});
     this.emit(JOIN_CONFIRMATION, {didJoin: true})
