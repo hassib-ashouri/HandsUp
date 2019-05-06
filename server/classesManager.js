@@ -2,6 +2,7 @@
 // load the function to grab the db instance from the server.
 const getDb = require('./server.js').getDb;
 const assert = require('assert');
+const ERR_CLASS_DOES_NOT_EXIST = "does not exist";
 /**
  * a map of the unique codes of classes to their name.
  * The purpose is for fast lookup of class codes, and to save the 
@@ -70,6 +71,7 @@ function addDialogItem(code, item)
  * @param {String} code the code for the class the student is trying to add to.
  * @param {String} email the email of the student trying to join.
  * @param {Socket} socket The socket object of the student joining
+ * @throws {ERR_CLASS_DOES_NOT_EXIST}
  */
 function addStudent(code, email, socket)
 {
@@ -79,7 +81,8 @@ function addStudent(code, email, socket)
     assert.ok(email, "Uninitialized email input when adding a student");
     assert.ok(socket, "Uninitialized socket input when adding a student");
     //check if the class exits
-    assert.ok(classes[code], `Class of code ${code} does not exists`);
+    if(!Classes[code]) throw ERR_CLASS_DOES_NOT_EXIST;
+
     let classObj = classesMap.get(code);
     assert.ok(classObj, "Something is wrong, a class is not in the map." );
     // add a student as a listener to a class.
@@ -112,5 +115,6 @@ module.exports = {
     isActive : isActive,
     addDialogItem : addDialogItem,
     addStudent : addStudent,
-    getEmails: getEmails
+    getEmails: getEmails,
+    ERR_CLASS_DOES_NOT_EXIST: ERR_CLASS_DOES_NOT_EXIST,
 }
