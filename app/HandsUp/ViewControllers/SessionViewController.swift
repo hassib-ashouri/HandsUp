@@ -21,7 +21,7 @@ class SessionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Connection()
+        let _ = Connection()
         
         // Check if user is a student or professor
         if !defaults.bool(forKey: "isStudent"){ // Professor
@@ -64,21 +64,18 @@ class SessionViewController: UIViewController {
         if identifier == "recordSegue"{
             if defaults.bool(forKey: "isStudent"){      // Student requesting to joining session
 
-                // waite untile we get a response
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
-                {
-                    while(SessionViewController.joined == .noanswer){}
-                }
                 if SessionViewController.joined == .joined{
                     // TODO: Add code to check if session code is valid in server
                     Connection.classCode = sessionCodeTextField.text ?? "1234"
                     print("joined to class")
                     return true
                 }
-                else{           // not 6 numbers
+                else if SessionViewController.joined == .problem
+                {
+                    
                     let alertController = UIAlertController(
                         title: "Invalid Session Code",
-                        message: "Code should be 6 characters",
+                        message: "Session code does not exist",
                         preferredStyle: .alert
                     )
                     alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -89,10 +86,6 @@ class SessionViewController: UIViewController {
             else{       // Professor requesting unique session code
                 // TODO: Add code to wait for unique session code from server
                 // waite untile we get a response
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5)
-                {
-                    while(SessionViewController.joined == .noanswer){}
-                }
             }
         }
         return true

@@ -41,8 +41,10 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
             leaveButton.setTitle("End Session", for: .normal)
         }
         leaveButton.sizeToFit()
-        
-        sessionCodeLabel.text = "Session Code: " + Connection.classCode
+        sessionCodeLabel.text = "Session Code: "
+        DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
+            self.sessionCodeLabel.text = "Session Code: " + Connection.classCode
+        })
         
         recordButton.isEnabled = false
         cancelButton.isEnabled = false
@@ -150,6 +152,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     func leaveAlertActionTapped() {
         let jsonLoad: [String:Any] = ["code": Connection.classCode]
+        SessionViewController.joined = .noanswer
         if (defaults.bool(forKey: "isStudent")) {
             // TODO: Add code for student leaving session
             Connection.socket.emit("leave", jsonLoad)
