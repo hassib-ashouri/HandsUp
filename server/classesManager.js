@@ -81,7 +81,7 @@ function addStudent(code, email, socket)
     assert.ok(email, "Uninitialized email input when adding a student");
     assert.ok(socket, "Uninitialized socket input when adding a student");
     //check if the class exits
-    if(!Classes[code]) throw ERR_CLASS_DOES_NOT_EXIST;
+    if(!classes[code]) throw ERR_CLASS_DOES_NOT_EXIST;
 
     let classObj = classesMap.get(code);
     assert.ok(classObj, "Something is wrong, a class is not in the map." );
