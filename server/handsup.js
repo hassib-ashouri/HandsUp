@@ -61,9 +61,9 @@ function terminateSessionListner({code})
     let emails = getEmails(code);
     let dialogPromise = getDialog(code);
     console.log(`Professor terminated session with code ${code}.\nIt has ${emails.length} emails`);
-    dialogPromise.then( dialogArr => {
-        if(emails.length > 0)
-        {
+    if(emails.length > 0)
+    {
+        dialogPromise.then( dialogArr => {
             let dialog = dialogArr.reduce((acc, {dialog}) => acc += dialog + '\n', '');
             console.log(`DEBUGGING: dialog as a string ${dialog}`)
             var mailOptions = {
@@ -80,8 +80,8 @@ function terminateSessionListner({code})
                     console.log('Email sent: ' + info.response);
                 }
             });
-        }
-    })
+        });
+    }
     deleteClassWith(code);
     console.log(`deleted class with code ${code}`);
 }
@@ -128,7 +128,7 @@ function joinListner(data)
     }
     catch(e)
     {
-        if(e === ERR_CLASS_DOES_NOT_EXIST)
+        if(e == ERR_CLASS_DOES_NOT_EXIST)
         {
             console.error(`Class with code ${data.code} does not exist.`);
             this.emit(JOIN_CONFIRMATION, {didJoin: false})

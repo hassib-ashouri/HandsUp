@@ -10,7 +10,7 @@ import Foundation
 import SocketIO
 
 class Connection: NSObject {
-    static let manager = SocketManager(socketURL: URL(string:"http://localhost:4000")!)
+    static let manager = SocketManager(socketURL: URL(string:"http://handsup.blocklegion.tech:4000")!)
     static let socket = manager.defaultSocket 
     static var classCode:String = "1234"
     
