@@ -34,10 +34,8 @@ input.on('line', line => {
     {
         console.log('run a test:');
         let man = require('./classesManager')
-        let promise = man.getDialog(arg);
+        let promise = man.getEmails(arg);
         console.log(promise);
-        promise.then(dialog => console.log(dialog), console.log);
-        
         
     }
 })
