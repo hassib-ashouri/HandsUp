@@ -26,6 +26,21 @@ const {
 const server = require('http').createServer();
 const io = require('socket.io')(server);
 const MongoClient = require('mongodb').MongoClient;
+const readline = require('readline');
+let input = readline.createInterface({input: process.stdin, output: process.stdout});
+input.on('line', line => {
+    let [command, arg] = line.split(' ');
+    if(command == 'test')
+    {
+        console.log('run a test:');
+        let man = require('./classesManager')
+        let promise = man.getDialog(arg);
+        console.log(promise);
+        promise.then(dialog => console.log(dialog), console.log);
+        
+        
+    }
+})
 const client = new MongoClient('mongodb://localhost:27017',{useNewUrlParser: true});
 
 
