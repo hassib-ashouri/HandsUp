@@ -130,12 +130,12 @@ function joinListner(data)
     {
         if(e == ERR_CLASS_DOES_NOT_EXIST)
         {
-            console.error(`Class with code ${data.code} does not exist.`);
+            console.log(`Class with code ${data.code} does not exist.`);
             this.emit(JOIN_CONFIRMATION, {didJoin: false})
         }
         else
         {
-            console.error(`there is a problem with adding student ${data.email} to class with code ${data.code}`)
+            console.log(`there is a problem with adding student ${data.email} to class with code ${data.code}`)
         }
     }
     console.log("added to class", data.code, data.email);
