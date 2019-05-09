@@ -43,7 +43,25 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         leaveButton.sizeToFit()
         sessionCodeLabel.text = "Session Code: "
         DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
-            self.sessionCodeLabel.text = "Session Code: " + Connection.classCode
+            if SessionViewController.joined == .joined
+            {
+                //display correct class code if joined successfuly
+                self.sessionCodeLabel.text = "Session Code: " + Connection.classCode
+            }
+            else
+            {
+                // go back if the class does not exist.
+                let alertController = UIAlertController(
+                    title: "Invalid Session Code",
+                    message: "Session code does not exist",
+                    preferredStyle: .alert
+                )
+                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler:{ alert in
+                    self.dismiss(animated: true, completion: nil)
+                }))
+                self.present(alertController, animated: true, completion: nil)
+            }
+            
         })
         
         recordButton.isEnabled = false
@@ -78,6 +96,10 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
             OperationQueue.main.addOperation() {
                 self.recordButton.isEnabled = isButtonEnabled
             }
+        }
+        
+        Connection.socket.on("leave"){data, ack in
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
