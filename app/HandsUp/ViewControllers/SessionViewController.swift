@@ -53,6 +53,7 @@ class SessionViewController: UIViewController {
             // TODO: Add code for joining session
             let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": defaults.string(forKey: "email")]
             Connection.socket.emit("join",jsonLoad)
+            Connection.classCode = sessionCodeTextField.text as! String
         }
         else{                                   // Professor
             // TODO: Add code for starting session
