@@ -109,6 +109,29 @@ function getEmails(code)
     return Object.keys(classesMap.get(code).listeners);
 }
 
+/**
+ * get the dialog for a class with a specific code.
+ * @param {String} code - code for the class
+ * @returns {Promise} a promise of an array of the dialog items.
+ */
+function getDialog(code)
+{
+    let db = getDb();
+    let dialog = "";
+    if(!db) throw "Database is not connected";
+    return db.collection(code).find({}).toArray();
+}
+
+/**
+ * deletes a class with the specified code.
+ * @param {String} code 
+ */
+function deleteClassWith(code)
+{
+    delete classesMap.delete(code);
+    delete classes[code];
+}
+
 module.exports = {
     getUniqueID : getUniqueID,
     makeClass : makeClass,
@@ -116,5 +139,7 @@ module.exports = {
     addDialogItem : addDialogItem,
     addStudent : addStudent,
     getEmails: getEmails,
+    getDialog: getDialog,
+    deleteClassWith: deleteClassWith,
     ERR_CLASS_DOES_NOT_EXIST: ERR_CLASS_DOES_NOT_EXIST,
 }

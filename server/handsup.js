@@ -16,6 +16,8 @@ let {
     addDialogItem,
     addStudent,
     getEmails,
+    getDialog,
+    deleteClassWith,
     ERR_CLASS_DOES_NOT_EXIST,
 } = require('./classesManager.js');
 const nodemailer = require('nodemailer');
@@ -56,23 +58,32 @@ function uniqueCodeListner({className})
  */
 function terminateSessionListner({code})
 {
-    console.log(`Professor terminated session with code ${code}`);
     let emails = getEmails(code);
-    var mailOptions = {
-        from: 'hassib291@gmail.com',
-        to: emails.toString(),
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
-      };
-      
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
+    let dialogPromise = getDialog(code);
+    console.log(`Professor terminated session with code ${code}.\nIt has ${emails.length} emails`);
+    dialogPromise.then( dialogArr => {
+        if(emails.length > 0)
+        {
+            let dialog = dialogArr.reduce((acc, {dialog}) => acc += dialog + '\n', '');
+            console.log(`DEBUGGING: dialog as a string ${dialog}`)
+            var mailOptions = {
+                from: 'hassib291@gmail.com',
+                to: emails.toString(),
+                subject: 'Sending Email using Node.js',
+                text: dialog
+            };
+            
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
         }
-      });
-
+    })
+    deleteClassWith(code);
+    console.log(`deleted class with code ${code}`);
 }
 
 /**
