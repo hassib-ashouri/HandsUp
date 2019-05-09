@@ -125,6 +125,9 @@ function joinListner(data)
     try
     {
         addStudent(data.code, data.email, this);
+        console.log("added to class", data.code, data.email);
+        this.emit(REPLY, {message: `Student ${data.email} was added to class ${data.code}`});
+        this.emit(JOIN_CONFIRMATION, {didJoin: true});
     }
     catch(e)
     {
@@ -133,14 +136,11 @@ function joinListner(data)
             console.log(`Class with code ${data.code} does not exist.`);
             this.emit(JOIN_CONFIRMATION, {didJoin: false})
         }
-        else
-        {
-            console.log(`there is a problem with adding student ${data.email} to class with code ${data.code}`)
-        }
     }
-    console.log("added to class", data.code, data.email);
-    this.emit(REPLY, {message: `Student ${data.email} was added to class ${data.code}`});
-    this.emit(JOIN_CONFIRMATION, {didJoin: true})
+    finally
+    {
+        console.log(`there is a problem with adding student ${data.email} to class with code ${data.code}`)
+    }
 }
 
 module.exports = {
