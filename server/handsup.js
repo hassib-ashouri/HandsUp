@@ -18,6 +18,7 @@ let {
     getEmails,
     getDialog,
     deleteClassWith,
+    getSockets,
     ERR_CLASS_DOES_NOT_EXIST,
 } = require('./classesManager.js');
 const nodemailer = require('nodemailer');
@@ -65,12 +66,11 @@ function terminateSessionListner({code})
     {
         dialogPromise.then( dialogArr => {
             let dialog = dialogArr.reduce((acc, {dialog}) => acc += dialog + '\n', '');
-            dialog += "This is the digest of the with code " + code + "\n" + dialog;
             var mailOptions = {
                 from: 'hassib291@gmail.com',
                 to: emails.toString(),
                 subject: 'Sending Email using Node.js',
-                text: dialog
+                text: "This is the digest of the with code " + code + "\n" + dialog
             };
             
             transporter.sendMail(mailOptions, function(error, info){
@@ -81,6 +81,7 @@ function terminateSessionListner({code})
                 }
             });
         });
+        getSockets(code).forEach(socket => socket.emit('leave'));
     }
     deleteClassWith(code);
     console.log(`deleted class with code ${code}`);

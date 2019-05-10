@@ -125,6 +125,16 @@ function getDialog(code)
 }
 
 /**
+ * get the sockets participated in a class.
+ * @param {String} code the code for the class 
+ * @returns {SocketIO[]}
+ */
+function getSockets(code)
+{
+    return Object.values(classesMap.get(code).listeners);
+}
+
+/**
  * deletes a class with the specified code.
  * @param {String} code 
  */
@@ -143,5 +153,6 @@ module.exports = {
     getEmails: getEmails,
     getDialog: getDialog,
     deleteClassWith: deleteClassWith,
+    getSockets: getSockets,
     ERR_CLASS_DOES_NOT_EXIST: ERR_CLASS_DOES_NOT_EXIST,
 }
