@@ -89,8 +89,6 @@ function addStudent(code, email, socket)
     // override old socket if it exists.
     // it works if the student reconnected later.
     classObj.listeners[email] = socket;
-    console.log(classObj.toString());
-    
 }
 
 /**

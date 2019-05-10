@@ -58,6 +58,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
                 )
                 alertController.addAction(UIAlertAction(title: "OK", style: .default, handler:{ alert in
                     self.dismiss(animated: true, completion: nil)
+                    SessionViewController.joined = .noanswer
                 }))
                 self.present(alertController, animated: true, completion: nil)
             }
