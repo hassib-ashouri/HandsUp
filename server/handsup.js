@@ -65,7 +65,7 @@ function terminateSessionListner({code})
     {
         dialogPromise.then( dialogArr => {
             let dialog = dialogArr.reduce((acc, {dialog}) => acc += dialog + '\n', '');
-            console.log(`DEBUGGING: dialog as a string ${dialog}`)
+            dialog += "This is the digest of the with code " + code + "\n" + dialog;
             var mailOptions = {
                 from: 'hassib291@gmail.com',
                 to: emails.toString(),
@@ -134,12 +134,12 @@ function joinListner(data)
         if(e == ERR_CLASS_DOES_NOT_EXIST)
         {
             console.log(`Class with code ${data.code} does not exist.`);
-            this.emit(JOIN_CONFIRMATION, {didJoin: false})
+            this.emit(JOIN_CONFIRMATION, {didJoin: false});
         }
-    }
-    finally
-    {
-        console.log(`there is a problem with adding student ${data.email} to class with code ${data.code}`)
+        else
+        {
+            console.log(`there is a problem with adding student ${data.email} to class with code ${data.code}`);
+        }
     }
 }
 
