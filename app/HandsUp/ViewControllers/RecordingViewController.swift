@@ -2,7 +2,6 @@
 //  ViewController.swift
 //  HandsUp
 //
-//  Created by Yazan Arafeh on 3/7/19.
 //  Copyright © 2019 Team07. All rights reserved.
 //
 
@@ -45,12 +44,12 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
             if SessionViewController.joined == .joined
             {
-                //display correct class code if joined successfuly
+                // Display correct class code if joined successfuly
                 self.sessionCodeLabel.text = "Session Code: " + Connection.classCode
             }
             else
             {
-                // go back if the class does not exist.
+                // Go back if the class does not exist.
                 let alertController = UIAlertController(
                     title: "Invalid Session Code",
                     message: "Session code does not exist",
@@ -177,11 +176,11 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         let jsonLoad: [String:Any] = ["code": Connection.classCode]
         SessionViewController.joined = .noanswer
         if (defaults.bool(forKey: "isStudent")) {
-            // TODO: Add code for student leaving session
+            // Student leaving session
             Connection.socket.emit("leave", jsonLoad)
         }
         else {
-            // TODO: Add code for professor ending session
+            // Professor ending session
             Connection.socket.emit("terminate", jsonLoad)
         }
         questionAnswerView.text = "Press the button below to start recording. Anything you say will appear here."

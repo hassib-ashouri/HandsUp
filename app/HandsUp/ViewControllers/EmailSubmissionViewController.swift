@@ -2,7 +2,6 @@
 //  EmailSubmissionViewController.swift
 //  HandsUp
 //
-//  Created by Yazan Arafeh on 4/18/19.
 //  Copyright © 2019 Team07. All rights reserved.
 //
 
@@ -20,8 +19,6 @@ class EmailSubmissionViewController: UIViewController {
         submitEmailButton.layer.cornerRadius = 4
         notAStudentButton.layer.cornerRadius = 4
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-        
-        // Do any additional setup after loading the view.
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -41,15 +38,4 @@ class EmailSubmissionViewController: UIViewController {
     @IBAction func notAStudentButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

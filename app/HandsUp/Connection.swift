@@ -2,7 +2,6 @@
 //  Connection.swift
 //  HandsUp
 //
-//  Created by Yazan Arafeh on 4/24/19.
 //  Copyright © 2019 Team07. All rights reserved.
 //
 
