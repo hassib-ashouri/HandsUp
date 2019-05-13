@@ -26,7 +26,9 @@ class EmailSubmissionViewController: UIViewController {
         self.view.endEditing(true)
         return true
     }
-    
+    /**
+        save button handler. save the new email to the local storage.
+    */
     @IBAction func saveEmailButtonTapped(_ sender: Any) {
         let defaults = UserDefaults.standard
         let email = emailTextField.text
@@ -35,6 +37,9 @@ class EmailSubmissionViewController: UIViewController {
         defaults.set(true, forKey: "isFirstLaunch")
     }
     
+    /**
+        handler for dismiss the current view if the not student.
+    */
     @IBAction func notAStudentButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
