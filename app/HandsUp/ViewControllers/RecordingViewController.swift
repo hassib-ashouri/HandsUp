@@ -11,12 +11,16 @@ import Speech
 class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     // MARK: Properties
+    // Text views
     @IBOutlet weak var questionAnswerView: UITextView!
     
+    // Buttons
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var leaveButton: UIButton!
+    
+    // Labels
     @IBOutlet weak var sessionCodeLabel: UILabel!
     
     let defaults = UserDefaults.standard
@@ -27,6 +31,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
     
+    // Initialize all buttons, labels, and check for user permission to record and recognize speech
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,6 +41,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         recordButton.layer.cornerRadius = 4
         questionAnswerView.layer.cornerRadius = 4
         leaveButton.layer.cornerRadius = 4
+        // Check if the user is a student and change the leave button accordingly
         if (!defaults.bool(forKey: "isStudent")){
             leaveButton.setTitle("End Session", for: .normal)
         }
@@ -49,7 +55,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
             }
             else
             {
-                // Go back if the class does not exist.
+                // Show alert to user that the session code is invalid and go back if the class does not exist.
                 let alertController = UIAlertController(
                     title: "Invalid Session Code",
                     message: "Session code does not exist",
@@ -70,6 +76,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         
         speechRecognizer.delegate = self
         
+        // Check permission from user to use speech recognition
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
             
             var isButtonEnabled = false
@@ -98,13 +105,18 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
             }
         }
         
+        // Leave the session
         Connection.socket.on("leave"){data, ack in
             self.dismiss(animated: true, completion: nil)
         }
     }
     
+    /**
+        Button handler that starts and stops recording
+    */
     @IBAction func recordButtonTapped(_ sender: AnyObject) {
         if audioEngine.isRunning {  // When recording is active
+            // Stop recording and reset record button
             audioEngine.stop()
             recognitionRequest?.endAudio()
             recordButton.isEnabled = false
@@ -114,6 +126,7 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
             submitButton.isEnabled = true
             
         } else {    // When recording is not active
+            // Start recording and change record button to indicate that recording is active
             startRecording()
             recordButton.setTitle("Stop Recording", for: .normal)
             recordButton.backgroundColor = UIColor(red: 255/255, green: 59/255, blue: 48/255, alpha: 1)
@@ -122,12 +135,15 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     
+    /**
+        Button handler that cancels and deletes current recording
+    */
     @IBAction func cancelButtonTapped(_ sender: Any) {
         // Stop recording audio
         audioEngine.stop()
         recognitionRequest?.endAudio()
         
-        // Reset question answer text field
+        // Reset Q&A text field
         questionAnswerView.text = "Press the button below to start recording. Anything you say will appear here."
         submitButton.isEnabled = false
         recordButton.isEnabled = true
@@ -135,12 +151,18 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         recordButton.backgroundColor = self.view.tintColor
     }
     
+    /**
+        Button handler that submits Q&As to be saved
+    */
     @IBAction func submitButtonTapped(_ sender: Any)
     {
         let data: [String: Any] = ["code": Connection.classCode, "dialog": questionAnswerView.text]
         Connection.socket.emit("dialog",data)
     }
     
+    /**
+        Button handler for leaving/ending the session
+     */
     @IBAction func leaveButtonTapped(_ sender: Any) {
         // Student alert strings
         let studentLeaveTitle = "Are you sure you want to leave?"
@@ -155,11 +177,12 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         var leaveAction = UIAlertAction.init()
         
-        if (defaults.bool(forKey: "isStudent")) {       // If user is a student, change alert message and button title
+        // Check user type and set alert message and buttons
+        if (defaults.bool(forKey: "isStudent")) {       // If user is a student
             alertController = UIAlertController(title: studentLeaveTitle, message: studentLeaveMessage, preferredStyle: .alert)
             leaveAction = UIAlertAction(title: "Leave", style: .destructive, handler: {(action) in self.leaveAlertActionTapped()})
         }
-        else {                                          // If user is professor, change alert message and button title
+        else {                                          // If user is professor
             alertController = UIAlertController(title: professorEndTitle, message: professorEndMessage, preferredStyle: .alert)
             leaveAction = UIAlertAction(title: "End Session", style: .destructive, handler: {(action) in self.leaveAlertActionTapped()})
         }
@@ -172,6 +195,9 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         present(alertController, animated: true)
     }
     
+    /**
+        Handler for clicking leave on leave session alert popup
+    */
     func leaveAlertActionTapped() {
         let jsonLoad: [String:Any] = ["code": Connection.classCode]
         SessionViewController.joined = .noanswer
@@ -187,6 +213,9 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     
+    /**
+        Function for starting the recording and speech recognition
+    */
     func startRecording() {
         
         if recognitionTask != nil {  //1
@@ -251,6 +280,9 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         
     }
     
+    /**
+        Checks status of speech recognition service and enables/disables button accordingly
+    */
     func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
         if available {
             recordButton.isEnabled = true
