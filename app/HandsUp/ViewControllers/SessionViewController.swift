@@ -2,7 +2,6 @@
 //  JoinSessionViewController.swift
 //  HandsUp
 //
-//  Created by Yazan Arafeh on 3/15/19.
 //  Copyright © 2019 Team07. All rights reserved.
 //
 
@@ -11,32 +10,36 @@ import SocketIO
 
 class SessionViewController: UIViewController {
     
+    // MARK: Properties
     @IBOutlet weak var sessionCodeTextField: UITextField!
     @IBOutlet weak var sessionButton: UIButton!
     @IBOutlet weak var sessionCodeLabel: UILabel!
-    @IBOutlet weak var notAUserTypeButton: UIButton!
-    // if a student joined a session sucessfully
+    @IBOutlet weak var notAProfessorButton: UIButton!
+    // the join state of a student.
     static var joined:JoinState = .noanswer
     let defaults = UserDefaults.standard
     
+    /**
+        configure the view based on the user student or a professor.
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
         let _ = Connection()
         
         // Check if user is a student or professor
         if !defaults.bool(forKey: "isStudent"){ // Professor
+            // add a start session button
             sessionButton.setTitle("Start New Session", for: .normal)
             sessionCodeTextField.isHidden = true
             sessionCodeLabel.text = "Click the button below to start a new class session. You will be given a unique code which you must share with your students so they can join your class session."
             self.tabBarController?.tabBar.isHidden = true
         }
-        else {
-            notAUserTypeButton.isHidden = true
+        else { // dont show not a professon button i am a student
+            notAProfessorButton.isHidden = true
         }
         sessionButton.layer.cornerRadius = 4
-        notAUserTypeButton.layer.cornerRadius = 4
+        notAProfessorButton.layer.cornerRadius = 4
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-        // Do any additional setup after loading the view.
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -44,35 +47,44 @@ class SessionViewController: UIViewController {
         return true
     }
     
-    @IBAction func notAUserTypeButtonTapped(_ sender: Any) {
+    @IBAction func notAProfessorButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    /**
+        the handler for joining a session for a student and creating a session
+        for a professor.
+        if student send the join code to srvr.
+        if professor send new code event.
+     */
     @IBAction func sessionButtonTapped(_ sender: Any) {
         if defaults.bool(forKey: "isStudent"){  // Student
-            // TODO: Add code for joining session
+            // Student joining session
             let jsonLoad: [String: Any] = ["code": sessionCodeTextField.text, "email": defaults.string(forKey: "email")]
             Connection.socket.emit("join",jsonLoad)
             Connection.classCode = sessionCodeTextField.text as! String
         }
         else{                                   // Professor
-            // TODO: Add code for starting session
+            // Professor starting session
             Connection.getSocket().emit("unique", ["className": "CS 146"])
         }
     }
     
+    /**
+        seeing the srvr allows the student to join. or responded with a error if the session
+        code does not exist.
+    */
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "recordSegue"{
             if defaults.bool(forKey: "isStudent"){      // Student requesting to joining session
 
                 if SessionViewController.joined == .joined{
-                    // TODO: Add code to check if session code is valid in server
                     Connection.classCode = sessionCodeTextField.text ?? "1234"
                     print("joined to class")
                     return true
                 }
                 else if SessionViewController.joined == .problem
-                {
+                { // if there is a problem with joining, present an alert
                     
                     let alertController = UIAlertController(
                         title: "Invalid Session Code",
@@ -84,30 +96,14 @@ class SessionViewController: UIViewController {
                     return false
                 }
             }
-            else{       // Professor requesting unique session code
-                // TODO: Add code to wait for unique session code from server
-                // waite untile we get a response
-            }
         }
         return true
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
-
+// Describe the join state of the app.
 enum JoinState
 {
-    case joined
-    case problem
-    case noanswer
+    case joined // no problem
+    case problem // the srvr responed with a problem
+    case noanswer // server did not respond yet
 }

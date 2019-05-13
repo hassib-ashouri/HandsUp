@@ -2,7 +2,6 @@
 //  AppDelegate.swift
 //  HandsUp
 //
-//  Created by Yazan Arafeh on 3/7/19.
 //  Copyright © 2019 Team07. All rights reserved.
 //
 

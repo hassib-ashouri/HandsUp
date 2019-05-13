@@ -57,7 +57,7 @@
                                 <nil key="highlightedColor"/>
                                 <size key="shadowOffset" width="0.0" height="0.0"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hos-CC-qVH">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hos-CC-qVH" userLabel="Not A Student Button">
                                 <rect key="frame" x="60" y="120" width="115" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -99,7 +99,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="0Xu-FB-VWh" id="GRF-Dj-U40"/>
                         <outlet property="notAStudentButton" destination="Hos-CC-qVH" id="kdz-hr-oal"/>
-                        <outlet property="submitEmailButton" destination="Hos-CC-qVH" id="CQ4-ee-jx7"/>
+                        <outlet property="submitEmailButton" destination="k6B-gx-HxW" id="OlM-an-6IQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -114,7 +114,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-hm-H8v">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-hm-H8v" userLabel="Not A Professor Button">
                                 <rect key="frame" x="60" y="120" width="122" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -124,8 +124,8 @@
                                 <state key="normal" title="Not a professor?"/>
                                 <connections>
                                     <action selector="leaveButtonTapped:" destination="ETB-3G-TTN" eventType="touchUpInside" id="iWB-XK-az6"/>
+                                    <action selector="notAProfessorButtonTapped:" destination="uFR-xI-vKY" eventType="touchUpInside" id="YiK-l2-lfq"/>
                                     <action selector="notAStudentButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lNV-VT-R3V"/>
-                                    <action selector="notAUserTypeButtonTapped:" destination="uFR-xI-vKY" eventType="touchUpInside" id="iFV-m0-6Wq"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="30" translatesAutoresizingMaskIntoConstraints="NO" id="npg-Uc-F3y" userLabel="Logo Label">
@@ -196,7 +196,7 @@
                         <barButtonItem key="backBarButtonItem" title="Leave Session" id="NAK-KR-09u"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="notAUserTypeButton" destination="ce6-hm-H8v" id="abU-2G-s5x"/>
+                        <outlet property="notAProfessorButton" destination="ce6-hm-H8v" id="abU-2G-s5x"/>
                         <outlet property="sessionButton" destination="7oS-li-nQt" id="Trq-lb-vvr"/>
                         <outlet property="sessionCodeLabel" destination="n1H-0g-cgb" id="LtA-EC-Jvj"/>
                         <outlet property="sessionCodeTextField" destination="SZX-xq-lmr" id="c6C-vJ-eJi"/>
@@ -517,6 +517,6 @@
         <image name="UserSettingsTabBarIcon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="k3D-cb-Ve2"/>
+        <segue reference="M3A-E3-prL"/>
     </inferredMetricsTieBreakers>
 </document>
